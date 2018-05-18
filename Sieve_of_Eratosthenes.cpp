@@ -2,24 +2,18 @@
 using namespace std;
 
 // https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
-
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- *	Problems:												*
- *		receiving segmentation error when calculating with	*
- *		boundary above 10^7.								*
-  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void SieveOfEratosthenes(long long int limit)
 {
 	long long int i;
 	long long int k;
 	long long int primeCount;
-	bool isPrime[limit + 1];
+	bool * isPrime = new bool[limit + 1];
 
-	memset(isPrime, true, sizeof(isPrime));
+	memset(isPrime, true, limit + 1);
 	isPrime[0] = false;
 	isPrime[1] = false;
 
-	for (i = 2; i*i <= limit; i++)
+	for (i = 2; i <= limit; i++)
 	{
 		if (isPrime[i])
 		{
@@ -37,21 +31,22 @@ void SieveOfEratosthenes(long long int limit)
 			primeCount ++;
 		}
 	}
-	cout << "\nThere are " << primeCount << " prime numbers between 2 and "
+	cout << "\nThere are " << primeCount << " prime numbers below "
 		 << limit << ".\n\n";
+	delete[] isPrime;
 }
-
-long long int upperBound;
 
 int main()
 {
-	cout << "Enter upper bound: ";
+	long long int upperBound;
+
+	cout << "Enter upper bound (inclusive): ";
 	cin  >> upperBound;
 
-	cout << "Finding all prime numbers below " << upperBound
-		 << "...\n";
+	cout << "Thinking ...\n";
 
 	SieveOfEratosthenes(upperBound);
+
 
 	return 0;
 }
